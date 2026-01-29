@@ -118,3 +118,10 @@ body {
         margin-top: 15px;
     }
 }
+.card-produto {
+    transition: transform 0.3s;
+}
+
+.card-produto:hover {
+    transform: scale(1.05);
+}

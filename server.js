@@ -1,0 +1,18 @@
+require("dotenv").config();
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+mongoose.connect(process.env.MONGO_URI)
+.then(() => console.log("MongoDB conectado"))
+.catch(err => console.log(err));
+
+app.use("/api/produtos", require("./routes/produtos"));
+app.use("/api/pagamento", require("./routes/pagamento"));
+app.use("/api/auth", require("./routes/auth"));
+
+app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
