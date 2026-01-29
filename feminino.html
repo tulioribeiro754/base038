@@ -1,40 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Feminino | BASE038</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/style.css">
+<meta charset="UTF-8">
+<title>Feminino | BASE038</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
 <header class="header">
     <div class="logo">BASE038</div>
-    <nav class="nav">
-        <a href="index.html">Home</a>
-        <a href="masculino.html">Masculino</a>
-        <a href="feminino.html">Feminino</a>
-        <a href="unissex.html">Unissex</a>
-        <a href="carrinho.html" class="btn-neon">Carrinho</a>
-    </nav>
 </header>
 
 <section>
     <h2>Feminino</h2>
-
-    <div class="grid-produtos">
-        <div class="card-produto">
-            <img src="images/produto.jpg">
-            <h3>Cropped Street</h3>
-            <span>R$ 119,90</span>
-            <a href="produto.html" class="btn-neon">Ver Produto</a>
-        </div>
-    </div>
+    <div id="grid-produtos" class="grid-produtos"></div>
 </section>
 
-<footer class="footer">
-    © 2026 BASE038
-</footer>
-
+<script src="js/produtos.js"></script>
+<script>carregarProdutos("feminino")</script>
 </body>
 </html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Admin | BASE038</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">BASE038 ADMIN</div>
+</header>
+
+<section class="admin">
+    <h2>Adicionar Produto</h2>
+
+    <input id="nome" placeholder="Nome do produto">
+    <input id="preco" placeholder="Preço">
+    <input id="categoria" placeholder="masculino / feminino / unissex">
+    <input id="imagem" placeholder="URL da imagem">
+    <button class="btn-neon" onclick="adicionar()">Adicionar</button>
+
+    <h2>Produtos</h2>
+    <div id="lista-admin"></div>
+</section>
+
+<script src="js/admin.js"></script>
+</body>
+</html>

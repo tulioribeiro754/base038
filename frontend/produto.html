@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Produto | BASE038</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="logo">BASE038</div>
+</header>
+
+<section class="produto-detalhe" id="produto"></section>
+
+<script>
+const id = new URLSearchParams(window.location.search).get("id");
+
+fetch(`http://localhost:3000/api/produtos`)
+.then(r => r.json())
+.then(produtos => {
+    const p = produtos.find(p => p._id === id);
+    document.getElementById("produto").innerHTML = `
+        <img src="${p.imagem}">
+        <div class="info-produto">
+            <h2>${p.nome}</h2>
+            <span class="preco">R$ ${p.preco.toFixed(2)}</span>
+            <button class="btn-neon">Adicionar ao Carrinho</button>
+        </div>
+    `;
+});
+</script>
+
+</body>
+</html>
