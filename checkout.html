@@ -4,39 +4,110 @@
     <meta charset="UTF-8">
     <title>Finalizar Compra | BASE038</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- CSS GLOBAL -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
+<!-- HEADER -->
 <header class="header">
     <div class="logo">BASE038</div>
+
     <nav class="nav">
         <a href="index.html">Home</a>
-        <a href="carrinho.html" class="btn-neon">Carrinho</a>
+        <a href="carrinho.html">Carrinho</a>
     </nav>
 </header>
 
-<section class="checkout">
-    <h2>Finalizar Compra</h2>
+<!-- CHECKOUT -->
+<section class="checkout container">
+    <h1>Finalizar Compra</h1>
 
-    <form>
-        <input type="text" placeholder="Nome completo" required>
-        <input type="email" placeholder="Email" required>
-        <input type="text" placeholder="Endereço completo" required>
+    <!-- RESUMO DO PEDIDO -->
+    <div class="resumo-pedido" id="resumoPedido">
+        <h3>Resumo do Pedido</h3>
+        <!-- Produtos renderizados via JS -->
+    </div>
 
-        <select required>
-            <option value="">Forma de pagamento</option>
-            <option>Pix</option>
-            <option>Cartão de Crédito</option>
-        </select>
+    <!-- DADOS DO CLIENTE -->
+    <div class="dados-checkout">
+        <h3>Dados do Comprador</h3>
 
-        <button class="btn-neon" type="submit">Confirmar Pagamento</button>
-    </form>
+        <input type="text" id="nome" placeholder="Nome completo" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="text" id="endereco" placeholder="Endereço completo" required>
+
+        <button class="btn-neon" onclick="pagarPix()">
+            Pagar com Pix
+        </button>
+    </div>
 </section>
 
+<!-- FOOTER -->
 <footer class="footer">
-    © 2026 BASE038
+    © 2026 BASE038 — Streetwear Original
 </footer>
+
+<!-- SCRIPTS -->
+<script>
+const resumo = document.getElementById("resumoPedido");
+const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+function renderResumo() {
+    let total = 0;
+    resumo.innerHTML = "<h3>Resumo do Pedido</h3>";
+
+    if (carrinho.length === 0) {
+        resumo.innerHTML += "<p>Carrinho vazio.</p>";
+        return;
+    }
+
+    carrinho.forEach(prod => {
+        total += prod.preco;
+        resumo.innerHTML += `
+            <div class="item-resumo">
+                <img src="${prod.imagem}">
+                <div>
+                    <p>${prod.nome}</p>
+                    <span>R$ ${prod.preco.toFixed(2)}</span>
+                </div>
+            </div>
+        `;
+    });
+
+    resumo.innerHTML += `
+        <div class="total">
+            Total: <strong>R$ ${total.toFixed(2)}</strong>
+        </div>
+    `;
+}
+
+async function pagarPix() {
+    if (!nome.value || !email.value || !endereco.value) {
+        alert("Preencha todos os dados");
+        return;
+    }
+
+    const response = await fetch("http://localhost:3000/api/pagamento", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            items: carrinho.map(p => ({
+                title: p.nome,
+                quantity: 1,
+                currency_id: "BRL",
+                unit_price: p.preco
+            }))
+        })
+    });
+
+    const data = await response.json();
+    window.location.href = data.link;
+}
+
+document.addEventListener("DOMContentLoaded", renderResumo);
+</script>
 
 </body>
 </html>

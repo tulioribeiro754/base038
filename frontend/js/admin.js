@@ -1,14 +1,16 @@
 const API = "http://localhost:3000/api/produtos";
+const token = localStorage.getItem("token");
+
+if (!token) window.location.href = "login.html";
 
 async function carregarAdmin() {
     const res = await fetch(API);
     const produtos = await res.json();
 
-    const lista = document.getElementById("lista-admin");
-    lista.innerHTML = "";
+    listaAdmin.innerHTML = "";
 
     produtos.forEach(p => {
-        lista.innerHTML += `
+        listaAdmin.innerHTML += `
             <div class="item-carrinho">
                 <span>${p.nome}</span>
                 <button onclick="remover('${p._id}')">❌</button>
@@ -18,24 +20,29 @@ async function carregarAdmin() {
 }
 
 async function adicionar() {
-    const produto = {
-        nome: nome.value,
-        preco: Number(preco.value),
-        categoria: categoria.value,
-        imagem: imagem.value
-    };
-
     await fetch(API, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(produto)
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": token
+        },
+        body: JSON.stringify({
+            nome: nome.value,
+            preco: Number(preco.value),
+            categoria: categoria.value,
+            imagem: imagem.value
+        })
     });
 
     carregarAdmin();
 }
 
 async function remover(id) {
-    await fetch(`${API}/${id}`, { method: "DELETE" });
+    await fetch(`${API}/${id}`, {
+        method: "DELETE",
+        headers: { "Authorization": token }
+    });
+
     carregarAdmin();
 }
 

@@ -11,6 +11,8 @@ mongoose.connect(process.env.MONGO_URI)
 .then(() => console.log("MongoDB conectado"))
 .catch(err => console.log(err));
 
+app.use("/api/auth", require("./routes/auth"));
 app.use("/api/produtos", require("./routes/produtos"));
+app.use("/api/pagamento", require("./routes/pagamento"));
 
 app.listen(3000, () => console.log("Servidor rodando na porta 3000"));
