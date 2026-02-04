@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
 
-module.exports = mongoose.model("Produto", {
+const ProdutoSchema = new mongoose.Schema({
     nome: String,
     preco: Number,
     categoria: String,
     imagem: String
 });
+
+module.exports = mongoose.model("Produto", ProdutoSchema);
