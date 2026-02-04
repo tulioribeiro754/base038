@@ -3,9 +3,8 @@ const Produto = require("../models/Produto");
 const auth = require("../middleware/auth");
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-    const produtos = await Produto.find();
-    res.json(produtos);
+router.get("/", async (_, res) => {
+    res.json(await Produto.find());
 });
 
 router.post("/", auth, async (req, res) => {
@@ -16,7 +15,7 @@ router.post("/", auth, async (req, res) => {
 
 router.delete("/:id", auth, async (req, res) => {
     await Produto.findByIdAndDelete(req.params.id);
-    res.json({ msg: "Produto removido" });
+    res.sendStatus(204);
 });
 
 module.exports = router;

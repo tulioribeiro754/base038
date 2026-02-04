@@ -7,15 +7,12 @@ mercadopago.configure({
 });
 
 router.post("/", async (req, res) => {
-    const preference = {
-        items: req.body.items,
-        payment_methods: {
-            excluded_payment_types: []
-        }
+    const pref = {
+        items: req.body.items
     };
 
-    const response = await mercadopago.preferences.create(preference);
-    res.json({ link: response.body.init_point });
+    const r = await mercadopago.preferences.create(pref);
+    res.json({ link: r.body.init_point });
 });
 
 module.exports = router;
