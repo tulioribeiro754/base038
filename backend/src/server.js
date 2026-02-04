@@ -1,3 +1,4 @@
+const path = require("path");
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -14,6 +15,13 @@ app.use("/api/produtos", require("./routes/produtos"));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/pagamento", require("./routes/pagamento"));
 
+/* SERVIR FRONTEND */
+app.use(express.static(path.join(__dirname, "../../frontend")));
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../../frontend/index.html"));
+});
+
 app.listen(3000, () => {
-    console.log("Servidor rodando na porta 3000");
+    console.log("Servidor rodando em http://localhost:3000");
 });
