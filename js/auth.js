@@ -1,28 +1,27 @@
-import { auth } from "./firebase.js";
-import { signInWithEmailAndPassword, onAuthStateChanged } from
-"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("loginForm");
 
-const ADMIN_EMAIL = "admin@base038.com";
+  if (!form) return;
 
-const form = document.getElementById("loginForm");
-
-if (form) {
   form.addEventListener("submit", e => {
     e.preventDefault();
 
-    const email = form.email.value;
-    const password = form.password.value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then(user => {
-        localStorage.setItem("user", JSON.stringify({
-          email: user.user.email,
-          isAdmin: user.user.email === ADMIN_EMAIL
-        }));
+    // 🔹 LOGIN SIMULADO (MVP)
+    const isAdmin = email === "admin@base038.com";
 
-        // 🔥 SEMPRE volta para a página inicial
-        window.location.href = "index.html";
-      })
-      .catch(() => alert("Email ou senha inválidos"));
+    localStorage.setItem("user", JSON.stringify({
+      email,
+      isAdmin
+    }));
+
+    // 🔥 REDIRECIONAMENTO CORRETO
+    if (isAdmin) {
+      window.location.href = "index.html"; // admin também volta pro início
+    } else {
+      window.location.href = "index.html";
+    }
   });
-}
+});
