@@ -1,20 +1,28 @@
 import { auth } from "./firebase.js";
-import { signInWithEmailAndPassword } from
+import { signInWithEmailAndPassword, onAuthStateChanged } from
 "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-document.getElementById("loginForm").addEventListener("submit", e => {
-  e.preventDefault();
+const ADMIN_EMAIL = "admin@base038.com";
 
-  const email = emailInput.value;
-  const password = passwordInput.value;
+const form = document.getElementById("loginForm");
 
-  signInWithEmailAndPassword(auth, email, password)
-    .then(user => {
-      if (email === "admin@base038.com") {
-        window.location.href = "admin.html";
-      } else {
+if (form) {
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const email = form.email.value;
+    const password = form.password.value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then(user => {
+        localStorage.setItem("user", JSON.stringify({
+          email: user.user.email,
+          isAdmin: user.user.email === ADMIN_EMAIL
+        }));
+
+        // 🔥 SEMPRE volta para a página inicial
         window.location.href = "index.html";
-      }
-    })
-    .catch(err => alert("Login inválido"));
-});
+      })
+      .catch(() => alert("Email ou senha inválidos"));
+  });
+}

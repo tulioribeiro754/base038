@@ -7,6 +7,14 @@
 </head>
 <body>
 
+<script>
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  if (!user || !user.isAdmin) {
+    window.location.href = "index.html";
+  }
+</script>
+
 <h2>Painel Administrativo</h2>
 
 <button onclick="addProduct()">Adicionar Produto</button>
@@ -15,6 +23,7 @@
 
 <div id="adminContent"></div>
 
+<script src="js/auth-state.js"></script>
 <script src="js/admin.js"></script>
 </body>
 </html>
