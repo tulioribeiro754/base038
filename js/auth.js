@@ -1,27 +1,22 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("loginForm");
+import { auth } from "./firebase.js";
+import { signInWithEmailAndPassword } from
+"https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
-  if (!form) return;
+document.getElementById("loginForm").addEventListener("submit", e => {
+  e.preventDefault();
 
-  form.addEventListener("submit", e => {
-    e.preventDefault();
+  const email = email.value;
+  const password = password.value;
 
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+  signInWithEmailAndPassword(auth, email, password)
+    .then(user => {
+      localStorage.setItem("user", JSON.stringify({
+        uid: user.user.uid,
+        email: user.user.email,
+        isAdmin: user.user.email === "admin@base038.com"
+      }));
 
-    // 🔹 LOGIN SIMULADO (MVP)
-    const isAdmin = email === "admin@base038.com";
-
-    localStorage.setItem("user", JSON.stringify({
-      email,
-      isAdmin
-    }));
-
-    // 🔥 REDIRECIONAMENTO CORRETO
-    if (isAdmin) {
-      window.location.href = "index.html"; // admin também volta pro início
-    } else {
       window.location.href = "index.html";
-    }
-  });
+    })
+    .catch(() => alert("Login inválido"));
 });
