@@ -1,4 +1,23 @@
 <!DOCTYPE html>
+<script type="module">
+  import { auth } from "./js/firebase.js";
+  import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+  const ADMIN_EMAIL = "seuemail@base038.com"; // 🔥 coloque o seu
+
+  onAuthStateChanged(auth, (user) => {
+    if (!user) {
+      window.location.href = "login.html";
+      return;
+    }
+
+    if (user.email !== ADMIN_EMAIL) {
+      alert("Acesso restrito ao administrador.");
+      window.location.href = "index.html";
+    }
+  });
+</script>
+
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -7,14 +26,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
-
-<script>
-  const user = JSON.parse(localStorage.getItem("user"));
-
-  if (!user || !user.isAdmin) {
-    window.location.href = "index.html";
-  }
-</script>
 
 <h2>Painel Administrativo</h2>
 

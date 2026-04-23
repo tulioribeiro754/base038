@@ -8,3 +8,18 @@ if (user) {
     document.getElementById("adminBtn")?.classList.remove("hidden");
   }
 }
+
+const ADMIN_EMAIL = "seuemail@base038.com";
+
+import { auth } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+onAuthStateChanged(auth, (user) => {
+  const adminBtn = document.getElementById("adminBtn");
+
+  if (user && user.email === ADMIN_EMAIL) {
+    adminBtn?.classList.remove("hidden");
+  } else {
+    adminBtn?.classList.add("hidden");
+  }
+});
