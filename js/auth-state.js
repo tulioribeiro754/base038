@@ -9,7 +9,7 @@ if (user) {
   }
 }
 
-const ADMIN_EMAIL = "seuemail@base038.com";
+const ADMIN_EMAIL = "tulioribeiro291@gmail.com";
 
 import { auth } from "./firebase.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
